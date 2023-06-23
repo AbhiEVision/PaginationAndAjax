@@ -208,7 +208,7 @@ namespace Test4.Controllers
 				Console.WriteLine(test);
 				return Json(new { }, JsonRequestBehavior.AllowGet);
 			}
-			return Json(data, JsonRequestBehavior.AllowGet);
+			return Json(data, "json", JsonRequestBehavior.AllowGet);
 		}
 
 

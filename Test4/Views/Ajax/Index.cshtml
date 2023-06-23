@@ -36,17 +36,77 @@
 		</tr>
 	</thead>
 	<tbody id="insert" class="text-bg-success text-center">
+		<image id="Loading" colspan="5" style="display:none" src="~/Loading/Test.gif" />
 	</tbody>
 </table>
 
+@*@{
+	AjaxOptions options = new AjaxOptions();
+	options.OnSuccess = "OnSuccess";
+	options.OnFailure = "OnFailure";
+	options.HttpMethod = "GET";
+	options.LoadingElementId = "#Loading";
+	options.InsertionMode = InsertionMode.InsertAfter;
+	//options.Url = "/Employee/GiveMeData";
+}*@
 
 
-<button id="before" class="btn btn-secondary">Fetch before</button>
-<button id="after" class="btn btn-secondary">Fetch Next</button>
-
-
-@section scripts
+@using(Ajax.BeginForm("GiveMeData","Employee", new { pageNumber =  1, pageSize = 10 }, new AjaxOptions()
 {
-	@*<link href="~/Content/CustomJS/Ajax_jQuery.js" />*@
-	@Scripts.Render("~/Content/CustomJS/Ajax_jQuery.js")
+	//OnSuccess = "OnSuccess",
+	//OnFailure = "OnFailure",
+	HttpMethod = "GET",
+	LoadingElementId = "Loading",
+	UpdateTargetId = "insert",
+	InsertionMode = InsertionMode.Replace
+}))
+{
+	<input type="submit" value="Fetch Data"/>
 }
+
+
+@*@Ajax.ActionLink("Fill Next Data", "GiveMeData", "Employee", new { pageNumber = 1, pageSize = 10 }, options)*@
+@*@Ajax.RouteLink("Fill Me", new { pageNumber = 1, pageSize = 10 }, options)*@
+
+
+
+	<script type="text/javascript" defer>
+		function OnSuccess(data) {
+			if (Object.keys(data).length === 0) {
+				$("#insert").html("<tr class='bg-danger text-white text-center'><td colspan='5'> we have noting to Show!<td></tr>")
+			}
+			else {
+				$("#insert").text("")
+				$.each(data, function (index, item) {
+
+					$('#insert').append('<tr><td class="col">' + item.Id +
+						'</td><td class="col">' + item.Name +
+						'</td><td class="col">' + item.email +
+						'</td><td class="col">' + item.UserName +
+						'</td><td class="col">' + item.DepId +
+						'</td><td class="col">' + item.Department_Id +
+						'</td></tr>');
+
+				})
+			}
+		}
+
+		function OnFailure(data) {
+			alert("Invalid URL!")
+		}
+
+	
+
+	</script>
+
+
+
+
+@*need when use traditional jQuery
+	<button id="before" class="btn btn-secondary">Fetch before</button>
+	<button id="after" class="btn btn-secondary">Fetch Next</button>*@
+
+
+
+
+
