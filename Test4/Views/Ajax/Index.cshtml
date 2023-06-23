@@ -1,0 +1,52 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="border-2 mb-4">
+	Page No : <input type="text" name="PageNumber" id="PageNo" class="text-black" value="1">
+	Page Size : <input type="text" name="PageSize" id="PageSize" class="text-black" value="10">
+
+</div>
+
+
+<table class="table table-striped text-center">
+	<thead class="text-white">
+		<tr class="bg-black">
+			<td class="col">
+				Id
+			</td>
+			<td class="col">
+				Name
+			</td>
+			<td class="col">
+				Email
+			</td>
+			<td class="col">
+				User name
+			</td>
+			<td class="col">
+				DepID
+			</td>
+			<td class="col">
+				Department name
+			</td>
+		</tr>
+	</thead>
+	<tbody id="insert" class="text-bg-success text-center">
+	</tbody>
+</table>
+
+
+
+<button id="before" class="btn btn-secondary">Fetch before</button>
+<button id="after" class="btn btn-secondary">Fetch Next</button>
+
+
+@section scripts
+{
+	@*<link href="~/Content/CustomJS/Ajax_jQuery.js" />*@
+	@Scripts.Render("~/Content/CustomJS/Ajax_jQuery.js")
+}
